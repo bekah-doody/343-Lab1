@@ -66,7 +66,7 @@ void* lv_get(lite_vector* vec, size_t index){
         return NULL;
     }
     //check if invalid index
-    if (vec->length >= index) {
+    if (index >= vec->length) {
         return NULL;
     }
     return vec->data[index];
@@ -91,7 +91,7 @@ static bool lv_resize(lite_vector* vec){
     size_t resize_capacity = vec->max_capacity * 2;
     void** resize_data = (void**)realloc(vec->data, resize_capacity * sizeof(void*));
     //check if memory alloc didn't work
-    if (resize_data = NULL) {
+    if (resize_data == NULL) {
         return false;
     }
     vec->data = resize_data;
@@ -104,7 +104,7 @@ bool lv_append(lite_vector* vec, void* element){
     if (vec == NULL) {
         return false;
     }
-    if (vec->length + 1 >= vec->max_capacity) {
+    if (vec->length >= vec->max_capacity) {
         //possibly call resize?
         bool resized = lv_resize(vec);
         if (resized != true) {
